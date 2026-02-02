@@ -5,8 +5,8 @@ import jsxImg from "./assets/jsx-ui.png"
 import stateImg from "./assets/state-mgmt.png"
 import Header from './component/header'
 import CoreConcept from './component/coreConcept'
-
-
+import TabButton from './component/tabButton'
+import {EXAMPLES} from './data.js'
 function App() {
   const [coreConcept]=useState([
     {
@@ -34,6 +34,10 @@ function App() {
           'React-managed data which, when changed, causes the component to re-render & the UI to update.',
       }
   ])
+  const [selectedTopic,setSelectedTopic]=useState('components')
+  function handleselect(selectButton){
+   setSelectedTopic(selectButton)
+  }
   return (
     <div>    
       <Header />
@@ -46,6 +50,24 @@ function App() {
           />
           
         </ul>
+        </section>
+        <section id='examples'>
+          <h2>Examples</h2>
+          <menu>
+            <TabButton onSelect={()=>handleselect('components')}>Components</TabButton>
+            <TabButton onSelect={()=>handleselect('jsx')}>jsx</TabButton>
+            <TabButton onSelect={()=>handleselect('props')}>props</TabButton>
+            <TabButton onSelect={()=>handleselect('state')}>state</TabButton>
+          </menu>
+        <div id='tab-content'>
+         <h3>{EXAMPLES[selectedTopic].title}</h3>
+         <p>{EXAMPLES[selectedTopic].description}</p>
+         <pre>
+          <code>
+            {EXAMPLES[selectedTopic].code}
+          </code>
+         </pre>
+        </div>
         </section>
       </main>
     </div>
