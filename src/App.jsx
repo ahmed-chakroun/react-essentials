@@ -8,7 +8,7 @@ import CoreConcept from './component/coreConcept'
 import TabButton from './component/tabButton'
 import {EXAMPLES} from './data.js'
 function App() {
-  const [coreConcept]=useState([
+  const coreConcept=[
     {
         image: componentsImg,
         title: 'Components',
@@ -33,9 +33,9 @@ function App() {
         description:
           'React-managed data which, when changed, causes the component to re-render & the UI to update.',
       }
-  ])
-  const [selectedTopic,setSelectedTopic]=useState('components')
-  function handleselect(selectButton){
+  ]
+  const [selectedTopic,setSelectedTopic]=useState()
+  function handleselect(selectButton ){
    setSelectedTopic(selectButton)
   }
   return (
@@ -54,20 +54,22 @@ function App() {
         <section id='examples'>
           <h2>Examples</h2>
           <menu>
-            <TabButton onSelect={()=>handleselect('components')}>Components</TabButton>
-            <TabButton onSelect={()=>handleselect('jsx')}>jsx</TabButton>
-            <TabButton onSelect={()=>handleselect('props')}>props</TabButton>
-            <TabButton onSelect={()=>handleselect('state')}>state</TabButton>
+            <TabButton isSelected={selectedTopic==='components'} onSelect={()=>handleselect('components')}>Components</TabButton>
+            <TabButton isSelected={selectedTopic==='jsx'} onSelect={()=>handleselect('jsx')}>jsx</TabButton>
+            <TabButton isSelected={selectedTopic==='props'} onSelect={()=>handleselect('props')}>props</TabButton>
+            <TabButton isSelected={selectedTopic==='state'} onSelect={()=>handleselect('state')}>state</TabButton>
           </menu>
-        <div id='tab-content'>
-         <h3>{EXAMPLES[selectedTopic].title}</h3>
+        
+        {!selectedTopic ?<p>please select an topic</p>: (<div id='tab-content'>
+          <h3>{EXAMPLES[selectedTopic].title}</h3>
          <p>{EXAMPLES[selectedTopic].description}</p>
          <pre>
           <code>
             {EXAMPLES[selectedTopic].code}
-          </code>
+          </code>  
          </pre>
-        </div>
+        </div>)} 
+         
         </section>
       </main>
     </div>
